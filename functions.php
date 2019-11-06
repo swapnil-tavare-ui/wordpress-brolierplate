@@ -11,12 +11,15 @@
     }
 
     function theme_assets() {
-        wp_enqueue_style('custom', CSS_DIR.'/main.css');    
+        $realpathcss = get_template_directory().'/assets/css';
+        $realpathjs = get_template_directory().'/assets/js';
 
+        wp_enqueue_style('main', CSS_DIR.'/main.css',array(), filemtime( $realpathcss.'/main.css' ),'all');    
+        wp_enqueue_style('font-opensans', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');    
 
-        wp_register_script('jquery-latest', JS_DIR.'/jquery-v3.4.min.js', false, null, true);
-        wp_enqueue_script('unveil', JS_DIR.'/jquery.unveil.js', array('jquery-latest') , null, true);
-        wp_enqueue_script('custom', JS_DIR.'/custom.js', array('jquery-latest', 'unveil'), null, true);
+        wp_enqueue_script('jquery-latest', JS_DIR.'/jquery-v3.4.min.js', false, filemtime( $realpathjs.'/jquery-v3.4.min.js' ), true);
+        wp_enqueue_script('unveil', JS_DIR.'/jquery.unveil.js', array('jquery-latest') , filemtime( $realpathjs.'/jquery.unveil.js' ), true);
+        wp_enqueue_script('custom', JS_DIR.'/custom.js', array('jquery-latest', 'unveil'), filemtime( $realpathjs.'/custom.js' ), true);
     }
     add_action('wp_enqueue_scripts', 'theme_assets');
 ?>
